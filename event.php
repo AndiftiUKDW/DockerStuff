@@ -1,4 +1,5 @@
 <?php
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 session_start();
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
   header("Location: login.php");
@@ -13,7 +14,7 @@ if($_GET){
     $sql = "SELECT * FROM event where id=$ID";
     $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_assoc($result);
-    $poster  = $row['image_path'];
+    $poster  = $base_url."/".$row['image_path'];
     $judul = $row['nama_event'];
     $artis = $row['nama_artis'];
     $lokasi = $row['lokasi'];
@@ -33,14 +34,14 @@ if($_GET){
 <html>
     <head>
         <title>Konseria</title>
-        <link rel="stylesheet" href="event.css">
+        <link rel="stylesheet" href="<?php echo $base_url;?>/event.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <div class="BOX">
             <header id="atas">
-            <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+            <a href="index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
                 <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
                     <a href="logout.php" id="Logout" class="button">Logout</a>
                     <a href="histori.php" id="Histori" class="button">Histori</a>
@@ -52,7 +53,7 @@ if($_GET){
             <main id="tengah">
                 <!-- BreadCrumb -->
                 
-                <p id="BreadCrumb"> <a class="home_button"href="index.php"> <i class="fa fa-home"></i> </a> > <a id="currentPage"> <?php echo $judul;?> </a> </p>
+                <p id="BreadCrumb"> <a class="home_button"href="<?php echo $base_url?>index.php"> <i class="fa fa-home"></i> </a> > <a id="currentPage"> <?php echo $judul;?> </a> </p>
                 
                 
                 <div id="fotokonser"><img src="<?php echo $poster;?>" alt="fotokonser"></div>
@@ -67,18 +68,18 @@ if($_GET){
                     <p id="Artist"><i class="fa fa-circle"></i><?php echo $artis;?></p>
 
                     <p class="penyelenggara" id="diselenggarakan">Diselenggarakan oleh:</p>
-                    <img src="images/logo-pk-black.png" alt="logo" id="pkenter" class="penyelenggara">
+                    <img src="<?php echo $base_url?>/images/logo-pk-black.png" alt="logo" id="pkenter" class="penyelenggara">
                     <p class="penyelenggara" id="namapenyelenggara">PK ENTERTAINMENT</p>
-                    <img src="images/sozo.png" alt="logo" id="sozo" class="penyelenggara">
+                    <img src="<?php echo $base_url?>/images/sozo.png" alt="logo" id="sozo" class="penyelenggara">
                     <p class="penyelenggara" id="namapenyelenggara">SOZO</p>
                 </div>
                 <div class="fotoseater">
-                    <img src="<?php echo $row['seating_path'];?>" alt="fotoseat">
+                    <img src="<?php echo $base_url."/".$row['seating_path'];?>" alt="fotoseat">
                 </div>
                 
 
                 <div class="package">
-                    <form action="Pembayaran.php" method="post" onsubmit="return validateFORM()">
+                    <form action="<?php echo $base_url;?>/Pembayaran.php" method="post" onsubmit="return validateFORM()">
                         <?php
                         $sql = "SELECT * FROM ticket WHERE event_ID=$ID";
                         $result = mysqli_query($conn,$sql);

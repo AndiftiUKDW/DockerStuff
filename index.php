@@ -1,4 +1,5 @@
 <?php
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 session_start();
 include_once("connection.php");
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
@@ -8,13 +9,13 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
 <html>
     <head>
         <title>Konseria</title>
-        <link rel="stylesheet" href="index.css">
-        <script src="index.js"></script>
+        <link rel="stylesheet" href="<?php echo $base_url;?>/index.css">
+        <script src="<?php echo $base_url;?>/index.js"></script>
     </head>
     <body>
         <div class="BOX">
             <header id="atas">
-                <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+                <a href="index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
                 <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
                     <a href="logout.php" id="Logout" class="button">Logout</a>
                     <a href="histori.php" id="Histori" class="button">Histori</a>
@@ -59,7 +60,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
                 <hr>
             </div>
                 <div class="featured">
-                    <img class="featured_img" src="images/radwimps poster.png">
+                    <img class="featured_img" src="<?php echo $base_url;?>/images/radwimps poster.png">
                 </div>
                 
                 <div class="urutan">
@@ -75,7 +76,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
                                  $temp = $row['harga'];
                                  $value = number_format($temp, 0, '', '.');
                                  echo "<div class='event_isi'>";
-                                 echo "<img class='event_img' src='$row[image_path]'>";
+                                 echo "<img class='event_img' src='$base_url/$row[image_path]'>";
                                  echo '<p class="nama_event">' . $row["nama_event"] . '</p>';
                                  echo "<p class='nama_artis'>$row[nama_artis]</p>";
                                  echo "<p class='alamat_event'>$row[provinsi]</p>";
