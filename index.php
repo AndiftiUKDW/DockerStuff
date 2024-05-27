@@ -17,11 +17,11 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
             <header id="atas">
                 <a href="index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
                 <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
-                    <a href="logout.php" id="Logout" class="button">Logout</a>
-                    <a href="histori.php" id="Histori" class="button">Histori</a>
+                    <a href="<?php echo $base_url;?>/logout.php" id="Logout" class="button">Logout</a>
+                    <a href="<?php echo $base_url;?>/histori.php" id="Histori" class="button">Histori</a>
                 <?php else: ?>
-                    <a href="login.php" id="Login" class="button">Login</a>
-                    <a href="sign_up.php" id="Sign_Up" class="button">Sign Up</a>
+                    <a href="<?php echo $base_url;?>/login.php" id="Login" class="button">Login</a>
+                    <a href="<?php echo $base_url;?>/sign_up.php" id="Sign_Up" class="button">Sign Up</a>
                 <?php endif; ?>
             </header>
             <main id="tengah">

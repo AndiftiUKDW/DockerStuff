@@ -1,8 +1,8 @@
 <?php
 session_start();
-
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 if (isset($_SESSION['email']) || isset($_COOKIE['email'])) {
-    header("Location: index.php");
+    header("Location: <?php echo $base_url;?>/index.php");
     exit();
 }
 
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dataUser = mysqli_fetch_assoc($result);
         $_SESSION['email'] = $email;
         
-        header("Location: index.php");
+        header("Location: <?php echo $base_url;?>/index.php");
         exit();
     } else {
         $error = "Email atau password salah.";
@@ -36,13 +36,13 @@ mysqli_close($conn);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Konseria</title>
-        <link rel="stylesheet" href="login.css">
+        <link rel="stylesheet" href="<?php echo $base_url;?>/login.css">
     </head>
     
     <body>
         <div class="BOX">
             <header id="atas">
-                <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+                <a href="<?php echo $base_url;?>/index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
             </header>
             <main id="tengah">
                 <div class="kotak">
