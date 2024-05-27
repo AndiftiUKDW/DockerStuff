@@ -1,8 +1,8 @@
 <?php
 session_start();
-
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']) . $_SERVER['REQUEST_URI'];
 if (isset($_SESSION['email']) || isset($_COOKIE['email'])) {
-    header("Location: index.php");
+    header("Location: $base_url/index.php");
     exit();
 }
 include('connection.php');
@@ -12,12 +12,12 @@ include('connection.php');
 <html>
     <head>
         <title>Konseria</title>
-        <link rel="stylesheet" href="sign_up.css">
+        <link rel="stylesheet" href="<?php echo $base_url?>/sign_up.css">
     </head>
     <body>
         <div class="BOX">
             <header id="atas">
-                <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+                <a href="index.php"><img src="<?php echo $base_url?>/images/logoKonseriafixed.png"></a>
             </header>
             <main id="tengah">
                 <div class="kotak">
@@ -61,7 +61,7 @@ include('connection.php');
                 $stmt->bind_param("ssss", $email, $nama, $password, $dob);
                 if ($stmt->execute()) {
                     echo "New record created successfully";
-                    header("Location: index.php");
+                    header("Location: $base_url/index.php");
                     $stmt -> close();
                 } 
             }
