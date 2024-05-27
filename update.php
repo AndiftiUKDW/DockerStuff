@@ -1,7 +1,8 @@
 <?php
 session_start();
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
-  header("Location: login.php");
+  header("Location: $base_url/login.php");
   exit();
 }
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
@@ -22,7 +23,7 @@ if($_POST){
         $sql = "UPDATE detail_order set nama='{$name[$i]}', email='{$email[$i]}', dob='{$DoB[$i]}', gender='{$gender[$i]}', phonenum={$phoneNum[$i]}, nik='{$Identity[$i]}', address='{$Address[$i]}' where id={$detailid[$i]}";
         $result = mysqli_query($conn,$sql);
     }
-    header("location:histori.php");
+    header("location:$base_url/histori.php");
 }
-header("location:index.php");
+header("location:$base_url/index.php");
 ?>

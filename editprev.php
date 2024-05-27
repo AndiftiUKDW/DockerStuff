@@ -1,7 +1,8 @@
 <?php
 session_start();
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
-  header("Location: login.php");
+  header("Location: $base_url/login.php");
   exit();
 }
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
@@ -10,7 +11,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
 
 include_once("connection.php");
 if(!$_GET){
-  header("Location: index.php");
+  header("Location: $base_url/index.php");
 } else {
 
   $sqldapet = "SELECT * FROM ordered where orderid=$_GET[id]";
@@ -23,7 +24,7 @@ if(!$_GET){
   $result = mysqli_query($conn,$sql);
   $row = mysqli_fetch_assoc($result);
   if($userid != $row['idUser']){
-    header("location: index.php");
+    header("location: $base_url/index.php");
   }
   $sql = "SELECT * FROM event where id=$eventId";
   $result = mysqli_query($conn,$sql);
@@ -31,7 +32,7 @@ if(!$_GET){
   $judul = $row['nama_event'];
   $tgl = date('d F Y',strtotime($row['tanggal']));
   $jam = date("H:i",strtotime($row['jam']));
-  $poster  = $row['image_path'];
+  $poster  = $base_url."/".$row['image_path'];
   $lokasi = $row['lokasi'];
 }
 
@@ -41,7 +42,7 @@ if(!$_GET){
 <html>
   <head>
     <title>Konseria</title>
-    <link rel="stylesheet" href="editprev.css" />
+    <link rel="stylesheet" href="<?php echo $base_url;?>/editprev.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -54,20 +55,20 @@ if(!$_GET){
   <body>
     <div class="BOX">
         <header id="atas">
-        <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+        <a href="<?php echo $base_url;?>/index.php"><img src="images/logoKonseriafixed.png"></a>
         <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
-        <a href="logout.php" id="Logout" class="button">Logout</a>
-        <a href="histori.php" id="Histori" class="button">Histori</a>
+        <a href="<?php echo $base_url;?>/logout.php" id="Logout" class="button">Logout</a>
+        <a href="<?php echo $base_url;?>/histori.php" id="Histori" class="button">Histori</a>
         <?php else: ?>
-        <a href="login.php" id="Login" class="button">Login</a>
-        <a href="sign_up.php" id="Sign_Up" class="button">Sign Up</a>
+        <a href="<?php echo $base_url;?>/login.php" id="Login" class="button">Login</a>
+        <a href="<?php echo $base_url;?>/sign_up.php" id="Sign_Up" class="button">Sign Up</a>
         <?php endif; ?>
       </header>
       <main id="tengah">
         <!-- BreadCrumb -->
         <div>
           <p id="BreadCrumb">
-            <a class="home_button" href="index.php">
+            <a class="home_button" href="<?php echo $base_url;?>/index.php">
               <i class="fa fa-home"></i> </a
             >> Detail Ticket
           </p>
@@ -126,7 +127,7 @@ if(!$_GET){
               }
             }
           </script>
-          <form action="update.php" method="post" onsubmit="return checkdata()">
+          <form action="<?php echo $base_url;?>/update.php" method="post" onsubmit="return checkdata()">
             <?php
             $curdate = new DateTime(date('d F Y'));
             $datadate = new DateTime($tgl);
@@ -184,7 +185,7 @@ if(!$_GET){
              echo "<input type='submit' id='buttonbayar' value='Ok' $kelebihan >";
             ?>
           </form>
-          <form action="hapus.php" method="POST">
+          <form action="<?php echo $base_url;?>/hapus.php" method="POST">
             <?php
             echo "<input type='hidden' name='orderid' value='$orderid'/>";
             echo "<input type='submit' id='buttonhapus' value='Hapus' $kelebihan >";

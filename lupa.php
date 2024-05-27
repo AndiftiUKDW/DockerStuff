@@ -1,8 +1,8 @@
 <?php
 session_start();
-
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 if (isset($_SESSION['email']) || isset($_COOKIE['email'])) {
-    header("Location: index.php");
+    header("Location: $base_url/index.php");
     exit();
 }
 
@@ -13,19 +13,19 @@ include('connection.php');
 <html>
     <head>
         <title>Konseria</title>
-        <link rel="stylesheet" href="lupa.css">
+        <link rel="stylesheet" href="<?php echo $base_url;?>/lupa.css">
     </head>
     <body>
         <div class="BOX">
             <header id="atas">
-                <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+                <a href="<?php echo $base_url;?>/index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
 
             </header>
             <main id="tengah">
                 <div class="kotak">
                     <p>"Lupa password Anda? Jangan khawatir! Hubungi customer service kami di konseria@gmail.com untuk mendapatkan bantuan dalam mereset password Anda.<br><br>
                     <div class="button">
-                        <a href="login.php">Kembali</a>
+                        <a href="<?php echo $base_url;?>/login.php">Kembali</a>
                     </div>
                 </div>
 

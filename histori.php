@@ -1,7 +1,8 @@
 <?php
 session_start();
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
-    header("Location: login.php");
+    header("Location: $base_url/login.php");
     exit();
   }
 include_once("connection.php");
@@ -16,19 +17,19 @@ $iduser = $row['idUser'];
 <html>
     <head>
         <title>Konseria</title>
-        <link rel="stylesheet" href="history.css">
-        <script src="index.js"></script>
+        <link rel="stylesheet" href="<?php echo $base_url;?>/history.css">
+        <script src="<?php echo $base_url;?>/index.js"></script>
     </head>
     <body>
         <div class="BOX">
             <header id="atas">
-                <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+                <a href="<?php echo $base_url;?>/index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
                 <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
-                    <a href="logout.php" id="Logout" class="button">Logout</a>
-                    <a href="histori.php" id="Histori" class="button">Histori</a>
+                    <a href="<?php echo $base_url;?>/logout.php" id="Logout" class="button">Logout</a>
+                    <a href="<?php echo $base_url;?>/histori.php" id="Histori" class="button">Histori</a>
                 <?php else: ?>
-                    <a href="login.php" id="Login" class="button">Login</a>
-                    <a href="sign_up.php" id="Sign_Up" class="button">Sign Up</a>
+                    <a href="<?php echo $base_url;?>/login.php" id="Login" class="button">Login</a>
+                    <a href="<?php echo $base_url;?>/sign_up.php" id="Sign_Up" class="button">Sign Up</a>
                 <?php endif; ?>
             </header>
             <main id="tengah">
@@ -45,8 +46,9 @@ $iduser = $row['idUser'];
                     $sqljumlah = "SELECT count(*) as jumlah from detail_order where id_order={$row['orderid']}";
                     $resultjumlah = mysqli_query($conn,$sqljumlah);
                     $rowjumlah = mysqli_fetch_assoc($resultjumlah);
+                    $image = $base_url."/".$row['image_path'];
                     echo "<div class='event_isi'>";
-                    echo "<img class='event_img' src='{$rowevent['image_path']}'>";
+                    echo "<img class='event_img' src='{$image}'>";
                     echo "<p class='nama_event'>{$rowevent['nama_event']}</p>";
                     echo "<p class='nama_artis'>{$rowevent['nama_artis']}</p>";
                     echo "<p class='alamat_event'>{$rowevent['provinsi']}</p>";
@@ -54,7 +56,7 @@ $iduser = $row['idUser'];
                     echo "<p class='tgl_event'>{$rowevent['tanggal']}</p>";
                     echo "<p class='jumlah_ticket'>Jumlah tiket : {$rowjumlah['jumlah']}</p>";
                     echo "<p class='order_date'>tgl beli: $tgl</p>";
-                    echo "<a class='event_link' href='editprev.php?id={$row['orderid']}'></a>";
+                    echo "<a class='event_link' href='".$base_url."/editprev.php?id={$row['orderid']}'></a>";
                     echo "</div>";
                 }
                 

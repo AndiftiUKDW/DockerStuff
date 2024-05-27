@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dataUser = mysqli_fetch_assoc($result);
         $_SESSION['email'] = $email;
         
-        header("Location: <?php echo $base_url;?>/index.php");
+        header("Location: $base_url/index.php");
         exit();
     } else {
         $error = "Email atau password salah.";
@@ -56,7 +56,7 @@ mysqli_close($conn);
                         </div>
                         <a href="lupa.php">Lupa Password?</a> <br><br>
                         <input type="submit" name="login" value="Log-In" id="login"> </input>
-                        <p>Belum punya akun? <a href="sign_up.php">Sign Up 😡</a> </p>
+                        <p>Belum punya akun? <a href="<?php echo $base_url;?>/sign_up.php">Sign Up 😡</a> </p>
                     </form> 
                 </div>
                

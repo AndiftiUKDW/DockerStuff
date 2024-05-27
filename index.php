@@ -76,7 +76,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
                                  $temp = $row['harga'];
                                  $value = number_format($temp, 0, '', '.');
                                  echo "<div class='event_isi'>";
-                                 echo "<img class='event_img' src='$base_url/$row[image_path]'>";
+                                 echo "<img class='event_img' src=\"".$base_url."/".$row['image_path']."\">";
                                  echo '<p class="nama_event">' . $row["nama_event"] . '</p>';
                                  echo "<p class='nama_artis'>$row[nama_artis]</p>";
                                  echo "<p class='alamat_event'>$row[provinsi]</p>";

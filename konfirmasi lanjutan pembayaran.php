@@ -1,7 +1,8 @@
 <?php
 session_start();
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
-  header("Location: login.php");
+  header("Location: $base_url/login.php");
   exit();
 }
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
@@ -14,19 +15,19 @@ include_once("connection.php");
 <html>
     <head>
         <title>Konseria</title>
-        <link rel="stylesheet" href="konfirmasi.css">
+        <link rel="stylesheet" href="<?php echo $base_url;?>/konfirmasi.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <div class="BOX">
             <header id="atas">
-            <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+            <a href="<?php echo $base_url;?>/index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
                 <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
-                    <a href="logout.php" id="Logout" class="button">Logout</a>
+                    <a href="<?php echo $base_url;?>/logout.php" id="Logout" class="button">Logout</a>
                 <?php else: ?>
-                    <a href="login.php" id="Login" class="button">Login</a>
-                    <a href="sign_up.php" id="Sign_Up" class="button">Sign Up</a>
+                    <a href="<?php echo $base_url;?>/login.php" id="Login" class="button">Login</a>
+                    <a href="<?php echo $base_url;?>/sign_up.php" id="Sign_Up" class="button">Sign Up</a>
                 <?php endif; ?>
             </header>
             <main id="tengah">
@@ -65,7 +66,7 @@ include_once("connection.php");
                     <h1>Pesanan Berhasil!</h1>
                     <p>Terima kasih atas kepercayaan Anda.</p>
                     <p>Tiket dikirim melalui email.</p>
-                    <a class="kembali"href="index.php" >Kembali ke Halaman Utama</a>
+                    <a class="kembali"href="<?php echo $base_url;?>/index.php" >Kembali ke Halaman Utama</a>
                     <br>
                 </div>
                 <?php endif;?>

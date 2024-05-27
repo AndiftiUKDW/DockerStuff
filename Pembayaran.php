@@ -1,7 +1,8 @@
 <?php
 session_start();
+$base_url = ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http') . '://' . ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST']);
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
-  header("Location: login.php");
+  header("Location: $base_url/login.php");
   exit();
 }
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
@@ -10,7 +11,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
 
 include_once("connection.php");
 if(!$_POST){
-  header("Location: index.php");
+  header("Location: $base_url/index.php");
 } else {
   $sql = "SELECT * FROM event where id=$_POST[id]";
   $result = mysqli_query($conn,$sql);
@@ -18,7 +19,7 @@ if(!$_POST){
   $judul = $row['nama_event'];
   $tgl = date('d F Y',strtotime($row['tanggal']));
   $jam = date("H:i",strtotime($row['jam']));
-  $poster  = $row['image_path'];
+  $poster  = $base_url."/".$row['image_path'];
   $lokasi = $row['lokasi'];
 }
 
@@ -28,7 +29,7 @@ if(!$_POST){
 <html>
   <head>
     <title>Konseria</title>
-    <link rel="stylesheet" href="Pembayaran.css" />
+    <link rel="stylesheet" href="<?php echo $base_url;?>/Pembayaran.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -41,13 +42,13 @@ if(!$_POST){
   <body>
     <div class="BOX">
         <header id="atas">
-        <a href="index.php"><img src="images/logoKonseriafixed.png"></a>
+        <a href="<?php echo $base_url;?>/index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
         <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
-        <a href="logout.php" id="Logout" class="button">Logout</a>
-        <a href="histori.php" id="Histori" class="button">Histori</a>
+        <a href="<?php echo $base_url;?>/logout.php" id="Logout" class="button">Logout</a>
+        <a href="<?php echo $base_url;?>/histori.php" id="Histori" class="button">Histori</a>
         <?php else: ?>
-        <a href="login.php" id="Login" class="button">Login</a>
-        <a href="sign_up.php" id="Sign_Up" class="button">Sign Up</a>
+        <a href="<?php echo $base_url;?>/login.php" id="Login" class="button">Login</a>
+        <a href="<?php echo $base_url;?>/sign_up.php" id="Sign_Up" class="button">Sign Up</a>
         <?php endif; ?>
       </header>
       <main id="tengah">
@@ -56,7 +57,7 @@ if(!$_POST){
           <p id="BreadCrumb">
             <a class="home_button" href="index.php">
               <i class="fa fa-home"></i> </a
-            >> <a href="event.php?id=<?php echo $_POST['id'];?>"> <?php echo $judul;?> </a>> Pembayaran 
+            >> <a href="<?php echo $base_url;?>/event.php?id=<?php echo $_POST['id'];?>"> <?php echo $judul;?> </a>> Pembayaran 
           </p>
         </div>
         <div class="eventdetail">
@@ -113,7 +114,7 @@ if(!$_POST){
               }
             }
           </script>
-          <form action="konfirmasi lanjutan pembayaran.php" method="post" onsubmit="return checkdata()">
+          <form action="<?php echo $base_url;?>/konfirmasi lanjutan pembayaran.php" method="post" onsubmit="return checkdata()">
             <?php
             $idtick = $_POST['ticketID'];
             $harga = 0;
@@ -163,7 +164,7 @@ if(!$_POST){
                     <label for="Qris">
                     <p>Qris</p>
                     <img
-                      src="images/qris.png"
+                      src="<?php echo $base_url;?>/images/qris.png"
                       class="logoPembayaran"
                     />
                     </label>
@@ -173,7 +174,7 @@ if(!$_POST){
                     <label for="Gopay">
                     <p>Gopay</p>
                     <img
-                      src="images/gopay.png"
+                      src="<?php echo $base_url;?>/images/gopay.png"
                       class="logoPembayaran"
                       alt="Gopay"
                     />
@@ -183,7 +184,7 @@ if(!$_POST){
                     <label for="dana">
                     <p>Dana</p>
                     <img
-                      src="images/dana.png"
+                      src="<?php echo $base_url;?>/images/dana.png"
                       class="logoPembayaran"
                     />
                     </label>
