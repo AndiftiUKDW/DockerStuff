@@ -1,5 +1,5 @@
 <?php
-$url = $base_url
+$url = $base_url;
 session_start();
 include_once("connection.php");
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
