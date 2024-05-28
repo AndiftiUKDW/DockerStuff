@@ -85,7 +85,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
                                  echo "<p class='tgl_event'>$row[tanggal]</p>";
                                  echo "<p class='event_startfrom'>start from :</p>";
                                  echo "<p class='event_harga'>Rp $value</p>";
-                                 echo "<a class='event_link' href='event.php?id=$row[id]'></a>";
+                                 echo "<a class='event_link' href='$base_url/event.php?id=$row[id]'></a>";
                                  echo "</div>";
                              }
                          }
