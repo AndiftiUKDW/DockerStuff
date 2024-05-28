@@ -1,7 +1,7 @@
 <?php
-$url = $base_url;
 session_start();
 include_once("connection.php");
+$url = $base_url;
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
 $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
 ?>
