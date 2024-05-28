@@ -1,5 +1,5 @@
 <?php
-
+$url = $base_url
 session_start();
 include_once("connection.php");
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
@@ -95,21 +95,21 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
                              $searchInp  = $_GET['searchInp'];
                              switch ($searchBy) {
                                  case "Artis":
-                                     generateSQL('nama_artis', $searchInp,$base_url);
+                                     generateSQL('nama_artis', $searchInp,$url);
                                      break;
                                  case "Lokasi":
-                                     generateSQL('lokasi', $searchInp,$base_url);
+                                     generateSQL('lokasi', $searchInp,$url);
                                      break;
                                  case "Tanggal":
-                                     generateSQL('tanggal', $searchInp,$base_url);
+                                     generateSQL('tanggal', $searchInp,$url);
                                      break;
                                  default:
-                                     generateSQL('nama_event', $searchInp,$base_url);
+                                     generateSQL('nama_event', $searchInp,$url);
                                      break;
                              }
                          }
                          else{
-                             generateSQL('nama_event', '',$base_url);
+                             generateSQL('nama_event', '',$url);
                          }
                         
                 ?>
