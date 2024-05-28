@@ -1,12 +1,12 @@
 <?php
 session_start();
+include('connection.php');
 
 if (isset($_SESSION['email']) || isset($_COOKIE['email'])) {
     header("Location: <?php echo $base_url;?>/index.php");
     exit();
 }
 
-include('connection.php');
 
 $error = '';
 

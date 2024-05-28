@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once("connection.php");
 
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
   header("Location: $base_url/login.php");
@@ -9,7 +10,6 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email
 $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
 
 
-include_once("connection.php");
 if(!$_POST){
   header("Location: $base_url/index.php");
 } else {

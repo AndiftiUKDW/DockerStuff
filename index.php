@@ -15,7 +15,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
     <body>
         <div class="BOX">
             <header id="atas">
-                <a href="index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
+                <a href="<?php echo $base_url;?>/index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
                 <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
                     <a href="<?php echo $base_url;?>/logout.php" id="Logout" class="button">Logout</a>
                     <a href="<?php echo $base_url;?>/histori.php" id="Histori" class="button">Histori</a>
@@ -65,7 +65,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
                 
                 <div class="urutan">
                         <?php
-                         function generateSQL($who, $inp)
+                         function generateSQL($who, $inp,$url)
                          {
                              include("connection.php");
                              $sql = "SELECT * from event
@@ -76,7 +76,7 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
                                  $temp = $row['harga'];
                                  $value = number_format($temp, 0, '', '.');
                                  echo "<div class='event_isi'>";
-                                 $base_url = getenv('base_url');
+                                 $base_url = $url;
                                  $img = $base_url."/".$row['image_path'];
                                  echo "<img class='event_img' src='$img'>";
                                  echo '<p class="nama_event">' . $row["nama_event"] . '</p>';
@@ -95,21 +95,21 @@ $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
                              $searchInp  = $_GET['searchInp'];
                              switch ($searchBy) {
                                  case "Artis":
-                                     generateSQL('nama_artis', $searchInp);
+                                     generateSQL('nama_artis', $searchInp,$base_url);
                                      break;
                                  case "Lokasi":
-                                     generateSQL('lokasi', $searchInp);
+                                     generateSQL('lokasi', $searchInp,$base_url);
                                      break;
                                  case "Tanggal":
-                                     generateSQL('tanggal', $searchInp);
+                                     generateSQL('tanggal', $searchInp,$base_url);
                                      break;
                                  default:
-                                     generateSQL('nama_event', $searchInp);
+                                     generateSQL('nama_event', $searchInp,$base_url);
                                      break;
                              }
                          }
                          else{
-                             generateSQL('nama_event', '');
+                             generateSQL('nama_event', '',$base_url);
                          }
                         
                 ?>

@@ -1,10 +1,11 @@
 <?php
 session_start();
+include_once("connection.php");
+
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
     header("Location: $base_url/login.php");
     exit();
   }
-include_once("connection.php");
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
 $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
 $sql = "SELECT * FROM user where email='$email'";

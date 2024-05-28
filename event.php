@@ -1,13 +1,14 @@
 <?php
 session_start();
+include_once("connection.php");
+
 if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])) {
-  header("Location: login.php");
+  header("Location: $base_url/login.php");
   exit();
 }
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : (isset($_COOKIE['email']) ? $_COOKIE['email'] : '');
 $isLoggedIn = isset($_SESSION['email']) || isset($_COOKIE['email']);
 
-include_once("connection.php");
 if($_GET){
     $ID = $_GET['id'];
     $sql = "SELECT * FROM event where id=$ID";
@@ -40,7 +41,7 @@ if($_GET){
     <body>
         <div class="BOX">
             <header id="atas">
-            <a href="index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
+            <a href="<?php echo $base_url;?>/index.php"><img src="<?php echo $base_url;?>/images/logoKonseriafixed.png"></a>
                 <?php if (isset($_SESSION['email']) || isset($_COOKIE['email'])) : ?>
                     <a href="<?php echo $base_url?>/logout.php" id="Logout" class="button">Logout</a>
                     <a href="<?php echo $base_url?>/histori.php" id="Histori" class="button">Histori</a>

@@ -1,10 +1,11 @@
 <?php
 session_start();
+include('connection.php');
 if (isset($_SESSION['email']) || isset($_COOKIE['email'])) {
     header("Location: $base_url/index.php");
     exit();
 }
-include('connection.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@ include('connection.php');
     <body>
         <div class="BOX">
             <header id="atas">
-                <a href="index.php"><img src="<?php echo $base_url?>/images/logoKonseriafixed.png"></a>
+                <a href="<?php echo $base_url;?>/index.php"><img src="<?php echo $base_url?>/images/logoKonseriafixed.png"></a>
             </header>
             <main id="tengah">
                 <div class="kotak">
@@ -36,7 +37,7 @@ include('connection.php');
                         </div>
                         
                         <input type="submit" value="Sign_Up" id="submit"> </input>
-                        <p>Sudah punya akun? <a href="login.php">Log In 😡</a> </p>
+                        <p>Sudah punya akun? <a href="<?php echo $base_url;?>/login.php">Log In 😡</a> </p>
                     </form>
                 </div>
                 
